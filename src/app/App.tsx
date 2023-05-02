@@ -12,12 +12,22 @@ export const App = () => {
     <Routes>
       <Route path="auth" element={<Auth />} />
 
-      <Route element={<ProtectedRoute />}>
+      <Route element={<ProtectedRoute  allowedRoles={['user', 'admin', 'staff']} />}>
         <Route path="/" element={<Home />} />
+      </Route>
+
+      <Route element={<ProtectedRoute  allowedRoles={['admin']} />}>
         <Route path="/admin" element={<Admin />} />
+      </Route>
+
+      <Route element={<ProtectedRoute  allowedRoles={['staff']} />}>
         <Route path="/staff" element={<Staff />} />
+      </Route>
+
+      <Route element={<ProtectedRoute  allowedRoles={['user']} />}>
         <Route path="/user" element={<User />} />
       </Route>
+      
     </Routes>
   );
 };

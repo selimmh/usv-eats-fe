@@ -12,14 +12,16 @@ import {
   Anchor,
   Stack,
   Container,
+  Center,
 } from "@mantine/core";
 import { useAuth } from "../store";
 import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
+import { useEffect } from "react";
 
 export const AuthenticationForm = (props: PaperProps) => {
   const [type, toggle] = useToggle(["login", "register"]);
-  const { auth, loginAsync, registerAsync } = useAuth();
+  const { auth, loginAsync, registerAsync, meAsync } = useAuth();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -47,7 +49,7 @@ export const AuthenticationForm = (props: PaperProps) => {
     try {
       if (type === "login") {
         await loginAsync(form.values.email, form.values.password);
-        navigate("/dashboard");
+        navigate("/");
       } else {
         await registerAsync(form.values.email, form.values.password);
         notifications.show({
@@ -87,99 +89,110 @@ export const AuthenticationForm = (props: PaperProps) => {
     }
   };
 
-  console.log(auth);
+  useEffect(() => {
+    (async () => {
+      try {
+        await meAsync();
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
-    <Container w={500}>
-      <Paper p="xl" withBorder {...props}>
-        <Text size="lg" weight={500} mb={16}>
-          Welcome to Mantine, {type} with
-        </Text>
+    <Center h="100vh">
+      <Container w={500}>
+        <Paper p="xl" withBorder {...props}>
+          <Text size="lg" weight={500} mb={16}>
+            Welcome to Mantine, {type} with
+          </Text>
 
-        <form
-          onSubmit={form.onSubmit(() => {
-            console.log(form.values);
-          })}
-        >
-          <Stack>
-            {type === "register" && (
+          <form>
+            <Stack>
+              {type === "register" && (
+                <TextInput
+                  label="Name"
+                  placeholder="Your name"
+                  value={form.values.name}
+                  onChange={(event) =>
+                    form.setFieldValue("name", event.currentTarget.value)
+                  }
+                />
+              )}
+
               <TextInput
-                label="Name"
-                placeholder="Your name"
-                value={form.values.name}
+                required
+                label="Email"
+                placeholder="hello@mantine.dev"
+                value={form.values.email}
                 onChange={(event) =>
-                  form.setFieldValue("name", event.currentTarget.value)
+                  form.setFieldValue("email", event.currentTarget.value)
+                }
+                error={form.errors.email && "Invalid email"}
+              />
+
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="Your password"
+                value={form.values.password}
+                onChange={(event) =>
+                  form.setFieldValue("password", event.currentTarget.value)
+                }
+                error={
+                  form.errors.password &&
+                  "Password should include at least 6 characters"
                 }
               />
-            )}
 
-            <TextInput
-              required
-              label="Email"
-              placeholder="hello@mantine.dev"
-              value={form.values.email}
-              onChange={(event) =>
-                form.setFieldValue("email", event.currentTarget.value)
-              }
-              error={form.errors.email && "Invalid email"}
-            />
+              {type === "register" && (
+                <Checkbox
+                  label="You can sell my data and spam me"
+                  checked={form.values.terms}
+                  onChange={(event) =>
+                    form.setFieldValue("terms", event.currentTarget.checked)
+                  }
+                />
+              )}
+            </Stack>
 
-            <PasswordInput
-              required
-              label="Password"
-              placeholder="Your password"
-              value={form.values.password}
-              onChange={(event) =>
-                form.setFieldValue("password", event.currentTarget.value)
-              }
-              error={
-                form.errors.password &&
-                "Password should include at least 6 characters"
-              }
-            />
+            <Group position="apart" mt="xl">
+              <Anchor
+                component="button"
+                type="button"
+                color="dimmed"
+                onClick={() => toggle()}
+                size="xs"
+              >
+                {type === "register"
+                  ? "Already have an account? Login"
+                  : "Don't have an account? Register"}
+              </Anchor>
+              <Button
+                loading={auth.loading}
+                onClick={handleSubmit}
+                type="submit"
+              >
+                {upperFirst(type)}
+              </Button>
+            </Group>
+          </form>
+        </Paper>
 
-            {type === "register" && (
-              <Checkbox
-                label="You can sell my data and spam me"
-                checked={form.values.terms}
-                onChange={(event) =>
-                  form.setFieldValue("terms", event.currentTarget.checked)
-                }
-              />
-            )}
-          </Stack>
-
-          <Group position="apart" mt="xl">
-            <Anchor
-              component="button"
-              type="button"
-              color="dimmed"
-              onClick={() => toggle()}
-              size="xs"
-            >
-              {type === "register"
-                ? "Already have an account? Login"
-                : "Don't have an account? Register"}
-            </Anchor>
-            <Button loading={auth.loading} onClick={handleSubmit} type="submit">
-              {upperFirst(type)}
-            </Button>
-          </Group>
-        </form>
-      </Paper>
-
-      {/* fast */}
-      <Group mt="lg">
-        <Button onClick={() => handleFastLogin("admin")} variant="light">
-          Admin
-        </Button>
-        <Button onClick={() => handleFastLogin("staff")} variant="light">
-          Staff
-        </Button>
-        <Button onClick={() => handleFastLogin("admin")} variant="light">
-          User
-        </Button>
-      </Group>
-    </Container>
+        {/* fast */}
+        <Group mt="lg">
+          <Button onClick={() => handleFastLogin("admin")} variant="light">
+            Admin
+          </Button>
+          <Button onClick={() => handleFastLogin("staff")} variant="light">
+            Staff
+          </Button>
+          <Button onClick={() => handleFastLogin("admin")} variant="light">
+            User
+          </Button>
+        </Group>
+      </Container>
+    </Center>
   );
 };

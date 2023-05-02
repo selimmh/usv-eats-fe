@@ -1,5 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { login, logout, me, register } from "./api";
+import { login, me, register } from "./api";
 import { AuthState, User } from "./types";
 import { useLocalStorage } from "@mantine/hooks";
 
@@ -11,6 +11,7 @@ export const authAtom = atom<AuthState>({
 
 export const useAuth = () => {
   const [auth, setAuth] = useAtom(authAtom);
+
   const [, setToken] = useLocalStorage<string>({
     key: "token",
     defaultValue: "",
@@ -50,18 +51,9 @@ export const useAuth = () => {
   };
 
   const logoutAsync = async () => {
+    localStorage.removeItem("token");
     setAuth((prev) => ({ ...prev, loading: true, error: null }));
-    try {
-      await logout();
-      setAuth((prev) => ({ ...prev, user: null, loading: false }));
-    } catch (error) {
-      setAuth((prev) => ({
-        ...prev,
-        error: error as any,
-        loading: false,
-        user: null,
-      }));
-    }
+    window.location.reload();
   };
 
   const meAsync = async () => {

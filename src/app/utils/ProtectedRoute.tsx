@@ -1,25 +1,36 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/features/auth/store";
 import { useEffect, useState } from "react";
+import { Roles } from "@/features/auth/types";
 
-export const ProtectedRoute = () => {
-  const location = useLocation();
-  const { auth, meAsync } = useAuth();
+interface ProtectedRouteProps {
+  allowedRoles: Roles[];
+}
 
-  console.log("me loading", auth.loading);
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  allowedRoles,
+}) => {
+  const { auth } = useAuth();
+  const [hasAccess, setHasAccess] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("me async");
-    meAsync();
-  }, []);
+    if (auth.user && auth.user.role) {
+      const hasAccess = allowedRoles.includes(auth.user.role);
+      setHasAccess(hasAccess);
+    }
+  }, [auth, allowedRoles]);
 
-  if (!auth.user && !auth.error) {
-    return <div>Loading...</div>; // or any loading indicator
+  if (auth.loading) {
+    return <div>Loading...</div>;
   }
 
-  return auth.user ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/auth" state={{ from: location }} replace />
-  );
+  if (!auth.user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (!hasAccess) {
+    return <div>You do not have access to this page.</div>;
+  }
+
+  return <Outlet />;
 };
