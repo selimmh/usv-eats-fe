@@ -6,7 +6,6 @@ import {
   Text,
   Paper,
   Group,
-  PaperProps,
   Button,
   Checkbox,
   Anchor,
@@ -19,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 
-export const AuthenticationForm = (props: PaperProps) => {
+export const AuthenticationForm = () => {
   const [type, toggle] = useToggle(["login", "register"]);
   const { auth, loginAsync, registerAsync, meAsync } = useAuth();
   const navigate = useNavigate();
@@ -103,7 +102,7 @@ export const AuthenticationForm = (props: PaperProps) => {
   return (
     <Center h="100vh">
       <Container w={500}>
-        <Paper p="xl" withBorder {...props}>
+        <Paper p="xl" withBorder>
           <Text size="lg" weight={500} mb={16}>
             Welcome to Mantine, {type} with
           </Text>
