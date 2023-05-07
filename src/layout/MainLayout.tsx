@@ -1,5 +1,5 @@
-import { Footer } from "@/shared/components/footer/footer";
-import { Header } from "@/shared/components/header/header";
+import { Footer } from "@/shared/components/Footer/Footer";
+import { Header } from "@/shared/components/Header/Header";
 import { useLocation } from "react-router-dom";
 import { Container } from "@mantine/core";
 

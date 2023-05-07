@@ -7,8 +7,8 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
-import { data } from "./data";
-import { useStyles } from "./styles";
+import { data } from "./Header.data";
+import { useStyles } from "./Header.styles";
 
 export const Header = () => {
   const [opened, { toggle }] = useDisclosure(false);
@@ -33,7 +33,7 @@ export const Header = () => {
   ));
 
   return (
-    <MantineHeader height={60} mb={120}>
+    <MantineHeader height={60} mb={60}>
       <Container className={classes.header}>
         <div>usv-eats</div>
         <Group spacing={5} className={classes.links}>

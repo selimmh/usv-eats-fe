@@ -1,9 +1,5 @@
-import { AuthenticationForm } from "@/features/auth/components/AuthenticationForm";
+import { AuthForm } from "@/features/auth/components/AuthForm";
 
 export const Auth = () => {
-  return (
-    <>
-      <AuthenticationForm />
-    </>
-  );
+  return <AuthForm />;
 };

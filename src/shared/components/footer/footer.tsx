@@ -12,8 +12,8 @@ import {
   IconBrandInstagram,
 } from "@tabler/icons-react";
 
-import { data } from "./data";
-import { useStyles } from "./styles";
+import { data } from "./Footer.data";
+import { useStyles } from "./Footer.styles";
 
 export const Footer = () => {
   const { classes } = useStyles();
@@ -31,7 +31,7 @@ export const Footer = () => {
   ));
 
   return (
-    <MantineFooter height={60}>
+    <MantineFooter height={60} mt={60}>
       <Container className={classes.inner}>
         <div>usv-eats</div>
 

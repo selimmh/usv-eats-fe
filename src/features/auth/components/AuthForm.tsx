@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
 
-export const AuthenticationForm = () => {
+export const AuthForm = () => {
   const [type, toggle] = useToggle(["login", "register"]);
   const { auth, loginAsync, registerAsync, meAsync } = useAuth();
   const navigate = useNavigate();

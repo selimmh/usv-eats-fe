@@ -1,5 +1,5 @@
-import React from "react";
+import { Products as ProductsA } from "@/features/products/components/Products/Products";
 
 export const Products = () => {
-  return <div>Products</div>;
+  return <ProductsA />;
 };
