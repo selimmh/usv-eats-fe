@@ -8,6 +8,7 @@ import { Staff } from "@/pages/Staff";
 import { User } from "@/pages/User";
 import { MainLayout } from "@/layout/MainLayout";
 import { Products } from "@/pages/Products";
+import { Favorites } from "@/pages/Favorites";
 
 export const App = () => {
   return (
@@ -20,6 +21,7 @@ export const App = () => {
         >
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Route>
 
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

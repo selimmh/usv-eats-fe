@@ -1,5 +1,5 @@
-import { Products as ProductsA } from "@/features/products/components/Products/Products";
+import { ProductsMenu } from "@/features/products/components/ProductsMenu/ProductsMenu";
 
 export const Products = () => {
-  return <ProductsA />;
+  return <ProductsMenu />;
 };

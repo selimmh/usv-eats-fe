@@ -1,10 +1,11 @@
 export interface ProductCardProps {
-  image: string;
-  title: string;
-  country: string;
+  price: number;
+  name: string;
   description: string;
-  badges: {
-    emoji: string;
-    label: string;
-  }[];
+  images: string[];
+  badges: string[];
+  loading: boolean;
+  onAddFavorite: () => void;
+  onRemoveFavorite: () => void;
+  isFavorite: boolean;
 }

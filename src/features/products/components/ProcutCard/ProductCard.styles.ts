@@ -1,4 +1,4 @@
-import { createStyles, rem } from "@mantine/core";
+import { createStyles, rem, getStylesRef } from "@mantine/core";
 
 export const useStyles = createStyles((theme) => ({
   card: {
@@ -15,13 +15,45 @@ export const useStyles = createStyles((theme) => ({
     paddingBottom: theme.spacing.md,
   },
 
+  name: {
+    overflow: "hidden",
+  },
+
   like: {
     color: theme.colors.red[6],
+  },
+
+  liked: {
+    fill: theme.colors.red[6],
   },
 
   label: {
     textTransform: "uppercase",
     fontSize: theme.fontSizes.xs,
     fontWeight: 700,
+  },
+
+  carousel: {
+    "&:hover": {
+      [`& .${getStylesRef("carouselControls")}`]: {
+        opacity: 1,
+      },
+    },
+  },
+
+  carouselControls: {
+    ref: getStylesRef("carouselControls"),
+    transition: "opacity 150ms ease",
+    opacity: 0,
+  },
+
+  carouselIndicator: {
+    width: rem(4),
+    height: rem(4),
+    transition: "width 250ms ease",
+
+    "&[data-active]": {
+      width: rem(16),
+    },
   },
 }));

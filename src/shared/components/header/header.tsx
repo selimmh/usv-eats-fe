@@ -4,11 +4,14 @@ import {
   Container,
   Group,
   Burger,
+  Button,
+  Indicator,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { data } from "./Header.data";
 import { useStyles } from "./Header.styles";
+import { IconShoppingCart } from "@tabler/icons-react";
 
 export const Header = () => {
   const [opened, { toggle }] = useDisclosure(false);
@@ -38,6 +41,11 @@ export const Header = () => {
         <div>usv-eats</div>
         <Group spacing={5} className={classes.links}>
           {items}
+          <Indicator inline label="1" size={16} color="red">
+            <Button leftIcon={<IconShoppingCart size={16} />} h={30}>
+              Cart
+            </Button>
+          </Indicator>
         </Group>
 
         <Burger

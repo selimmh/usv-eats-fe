@@ -13,6 +13,10 @@ export const data: Link[] = [
     label: "Products",
   },
   {
+    link: "/favorites",
+    label: "Favorites",
+  },
+  {
     link: "/account",
     label: "Account",
   },

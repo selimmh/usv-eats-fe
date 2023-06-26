@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@mantine/carousel": "^6.0.10",
     "@mantine/core": "^6.0.8",
     "@mantine/ds": "^6.0.10",
     "@mantine/form": "^6.0.8",
@@ -18,6 +19,7 @@
     "@mantine/notifications": "^6.0.8",
     "@tabler/icons-react": "^2.17.0",
     "axios": "^1.3.6",
+    "embla-carousel-react": "^8.0.0-rc03",
     "jotai": "^2.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
